@@ -111,7 +111,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         background = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
         HomeAdmin = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         HomeUser = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -377,12 +376,9 @@ public class AdminDashboard extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tubs/gaspol/image/database.png"))); // NOI18N
-
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Manage Database");
+        jLabel3.setText("Exit");
 
         javax.swing.GroupLayout HomeAdminLayout = new javax.swing.GroupLayout(HomeAdmin);
         HomeAdmin.setLayout(HomeAdminLayout);
@@ -390,17 +386,13 @@ public class AdminDashboard extends javax.swing.JFrame {
             HomeAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(HomeAdminLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(HomeAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(13, Short.MAX_VALUE))
         );
         HomeAdminLayout.setVerticalGroup(
             HomeAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(HomeAdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(59, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -503,15 +495,13 @@ public class AdminDashboard extends javax.swing.JFrame {
 
     private void HomeUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeUserMouseClicked
         // TODO add your handling code here:
-        UserHome user = new UserHome();
-        user.show();
+        new AdminDashboard().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_HomeUserMouseClicked
 
     private void HomeAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeAdminMouseClicked
         // TODO add your handling code here:
-        AdminDashboard admin = new AdminDashboard();
-        admin.show();
+        new Main().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_HomeAdminMouseClicked
 
@@ -563,7 +553,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

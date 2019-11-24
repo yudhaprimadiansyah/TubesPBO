@@ -19,7 +19,7 @@ public class Koneksi {
     private static final String DB_NAME = "gaspol_tubes";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/"+DB_NAME;
     private static final String DB_UNAME = "tubes";
-    private static final String DB_PASS = "tubes12345";
+    private static final String DB_PASS = "tubes2019!";
     
     public static Connection bukaKoneksi(){
         if(conn == null){

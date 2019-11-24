@@ -162,32 +162,39 @@ public class Login extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
+        
         String user = username.getText();
-       
+        
         String pass = new Enkripsi().hash(Arrays.toString(password.getPassword()));
        
-        Connection conn = Koneksi.bukaKoneksi();
-        String query = "SELECT * FROM pengelola WHERE username = "+user;
-        try {
-            PreparedStatement ps = conn.prepareStatement(query);
-            ResultSet res = ps.executeQuery();
-            while(res.next()){
-                if(res.getString("username").equals(user) && res.getString("password").equals(pass)){
-                    JOptionPane.showMessageDialog(this, "Login Berhasil");
-                    new AdminDashboard().setVisible(true);
-                    this.dispose();
-                    break;
-                }
-                else {
-                    JOptionPane.showMessageDialog(this, "Login Gagal");
-                }
-            }
-            res.close();
-            ps.close();
-        
-        } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        if(username.getText().equals("") || password.getPassword().toString().equals("")){
+            JOptionPane.showMessageDialog(this, "Username Atau Password Tidak Boleh Kosong");
         }
+        else {
+            Connection conn = Koneksi.bukaKoneksi();
+            String query = "SELECT * FROM pengelola WHERE username = "+user;
+            try {
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet res = ps.executeQuery();
+                while(res.next()){
+                    if(res.getString("username").equals(user) && res.getString("password").equals(pass)){
+                        JOptionPane.showMessageDialog(this, "Login Berhasil");
+                        new AdminDashboard().setVisible(true);
+                        this.dispose();
+                        break;
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(this, "Login Gagal");
+                    }
+                }
+                res.close();
+                ps.close();
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Terdapat Masalah Ke Database");
+            }
+        }
+        
     }//GEN-LAST:event_loginButtonActionPerformed
 
     /**

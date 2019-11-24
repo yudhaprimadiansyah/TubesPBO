@@ -377,8 +377,7 @@ public class UserHome extends javax.swing.JFrame {
 
     private void HomeAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeAdminMouseClicked
         // TODO add your handling code here:
-        AdminDashboard admin = new AdminDashboard();
-        admin.show();
+        new Main().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_HomeAdminMouseClicked
 

@@ -9,42 +9,21 @@ package com.tubs.gaspol.item;
  *
  * @author DORIZU
  */
-public class Mahasiswa {
-    int id, idKeahlian;
-    String nama, email, nim, judulPA;
+public class Mahasiswa extends Personal {
+   
+    private String nim;
 
-    public Mahasiswa(int id, int idKeahlian, String nama, String email, String nim, String judulPA) {
-        this.id = id;
-        this.idKeahlian = idKeahlian;
-        this.nama = nama;
-        this.email = email;
+    public Mahasiswa(String nim, int id, String name, String email, int idKeahlian) {
+        super(id, name, email, idKeahlian);
         this.nim = nim;
-        this.judulPA = judulPA;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getIdKeahlian() {
-        return idKeahlian;
-    }
-
-    public String getNama() {
-        return nama;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public String getNim() {
         return nim;
     }
 
-    public String getJudulPA() {
-        return judulPA;
+    public void setNim(String nim) {
+        this.nim = nim;
     }
-    
     
 }

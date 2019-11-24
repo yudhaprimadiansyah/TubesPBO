@@ -5,35 +5,26 @@
  */
 package com.tubs.gaspol.item;
 
+import java.sql.Time;
+
 /**
  *
  * @author DORIZU
  */
-public class JadwalMengajarDosen {
-    int id, hariKe;
-    String jamMulai, jamSelesai;
+public class JadwalMengajarDosen extends Jadwal {
+    private int hariKe;
 
-    public JadwalMengajarDosen(int id, int hariKe, String jamMulai, String jamSelesai) {
-        this.id = id;
+    public JadwalMengajarDosen(int hariKe, int idJadwal, Time jamMulai, Time jamSelesai) {
+        super(idJadwal, jamMulai, jamSelesai);
         this.hariKe = hariKe;
-        this.jamMulai = jamMulai;
-        this.jamSelesai = jamSelesai;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public int getHariKe() {
         return hariKe;
     }
 
-    public String getJamMulai() {
-        return jamMulai;
-    }
-
-    public String getJamSelesai() {
-        return jamSelesai;
+    public void setHariKe(int hariKe) {
+        this.hariKe = hariKe;
     }
     
     

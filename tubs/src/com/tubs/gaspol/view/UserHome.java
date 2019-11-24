@@ -11,6 +11,7 @@ import com.tubs.gaspol.*;
  *
  * @author DORIZU
  */
+
 public class UserHome extends javax.swing.JFrame {
 
     /**
@@ -56,7 +57,6 @@ public class UserHome extends javax.swing.JFrame {
         background = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
         HomeAdmin = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         HomeUser = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -256,12 +256,9 @@ public class UserHome extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tubs/gaspol/image/database.png"))); // NOI18N
-
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Manage Database");
+        jLabel3.setText("Exit");
 
         javax.swing.GroupLayout HomeAdminLayout = new javax.swing.GroupLayout(HomeAdmin);
         HomeAdmin.setLayout(HomeAdminLayout);
@@ -269,17 +266,13 @@ public class UserHome extends javax.swing.JFrame {
             HomeAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(HomeAdminLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(HomeAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
                 .addContainerGap())
         );
         HomeAdminLayout.setVerticalGroup(
             HomeAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(HomeAdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(59, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addContainerGap())
         );
@@ -330,7 +323,7 @@ public class UserHome extends javax.swing.JFrame {
                 .addComponent(HomeAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(680, 680, 680)
                 .addComponent(logo)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
                     .addGap(74, 74, 74)
@@ -445,7 +438,6 @@ public class UserHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;

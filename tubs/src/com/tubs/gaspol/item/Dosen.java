@@ -7,44 +7,34 @@ package com.tubs.gaspol.item;
 
 /**
  *
- * @author DORIZU
+ * @author seifer
  */
-public class Dosen {
-    
-    private int id, id_keahlian;
-    private String nama, kode_dosen, email, nip;
+public class Dosen extends Personal{
+    private String kodeDosen;
+    private String nip;
 
-    public Dosen(int id, int id_keahlian, String nama, String kode_dosen, String email, String nip) {
-        this.id = id;
-        this.id_keahlian = id_keahlian;
-        this.nama = nama;
-        this.kode_dosen = kode_dosen;
-        this.email = email;
+    public Dosen(String kodeDosen, String nip, int id, String name, String email, int idKeahlian) {
+        super(id, name, email, idKeahlian);
+        this.kodeDosen = kodeDosen;
         this.nip = nip;
     }
 
-    public int getId() {
-        return id;
+    public String getKodeDosen() {
+        return kodeDosen;
     }
 
-    public int getId_keahlian() {
-        return id_keahlian;
-    }
-
-    public String getNama() {
-        return nama;
-    }
-
-    public String getKode_dosen() {
-        return kode_dosen;
-    }
-
-    public String getEmail() {
-        return email;
+    public void setKodeDosen(String kodeDosen) {
+        this.kodeDosen = kodeDosen;
     }
 
     public String getNip() {
         return nip;
     }
+
+    public void setNip(String nip) {
+        this.nip = nip;
+    }
+    
+    
     
 }

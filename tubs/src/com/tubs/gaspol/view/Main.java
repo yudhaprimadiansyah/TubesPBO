@@ -3,10 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tubs.gaspol.controller;
-
-import com.tubs.gaspol.view.*;
-import com.tubs.gaspol.db.*;
+package com.tubs.gaspol.view;
 
 /**
  *
@@ -19,7 +16,6 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
-        this.setTitle("Pilih Role");
     }
 
     /**
@@ -32,23 +28,20 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        keMahasiswa = new javax.swing.JButton();
+        labelMain = new javax.swing.JLabel();
         kePengelola = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        keMahasiswa = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        keMahasiswa.setBackground(new java.awt.Color(255, 102, 102));
-        keMahasiswa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        keMahasiswa.setForeground(new java.awt.Color(255, 255, 255));
-        keMahasiswa.setText("Mahasiswa");
-        keMahasiswa.setBorderPainted(false);
+        labelMain.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        labelMain.setForeground(new java.awt.Color(153, 153, 153));
+        labelMain.setText("Ticketing Sidang");
 
-        kePengelola.setBackground(new java.awt.Color(153, 153, 255));
+        kePengelola.setBackground(new java.awt.Color(102, 102, 255));
         kePengelola.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         kePengelola.setForeground(new java.awt.Color(255, 255, 255));
         kePengelola.setText("Pengelola");
@@ -59,52 +52,59 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel2.setText("Ticketing Sidang");
+        keMahasiswa.setBackground(new java.awt.Color(255, 102, 102));
+        keMahasiswa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        keMahasiswa.setForeground(new java.awt.Color(255, 255, 255));
+        keMahasiswa.setText("Mahasiswa");
+        keMahasiswa.setBorderPainted(false);
+        keMahasiswa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                keMahasiswaActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel1.setText("D3 Rekayasa Perangkat Lunak Aplikasi");
+        jLabel1.setText("Sistem Penjadwalan Sidang Mahasiswa D3 RPLA");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(85, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(93, 93, 93)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(keMahasiswa, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38)
-                                .addComponent(kePengelola, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(103, 103, 103))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(144, 144, 144))))
+                                .addComponent(keMahasiswa, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(kePengelola, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(labelMain)))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addGap(68, 68, 68)
+                .addComponent(labelMain)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(keMahasiswa, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(kePengelola, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52))
+                    .addComponent(kePengelola, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(keMahasiswa, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -122,9 +122,15 @@ public class Main extends javax.swing.JFrame {
 
     private void kePengelolaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kePengelolaActionPerformed
         // TODO add your handling code here:
-        new Pengelola();
+        new Login().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_kePengelolaActionPerformed
+
+    private void keMahasiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keMahasiswaActionPerformed
+        // TODO add your handling code here:
+        new UserHome().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_keMahasiswaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,9 +169,9 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton keMahasiswa;
     private javax.swing.JButton kePengelola;
+    private javax.swing.JLabel labelMain;
     // End of variables declaration//GEN-END:variables
 }

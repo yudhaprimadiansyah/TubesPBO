@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -222,6 +223,17 @@ public class CRUD {
                 Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, e);
             }
         }
+    }
+
+    public int hitungMuncul(String tfNimMhs, char c) {
+         //To change body of generated methods, choose Tools | Templates.
+         int count = 0;
+         for(int i=0;i<tfNimMhs.length();i++){
+             if(tfNimMhs.charAt(i) == c){
+                 count++;
+             }
+         }
+         return count+1;
     }
     
     

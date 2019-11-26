@@ -1,4 +1,6 @@
 package com.tubs.gaspol.view;
+import com.mysql.jdbc.StringUtils;
+import com.tubs.gaspol.db.CRUD;
 import com.tubs.gaspol.list.*;
 import com.tubs.gaspol.db.Koneksi;
 import java.sql.Connection;
@@ -355,14 +357,14 @@ public class UserHome extends javax.swing.JFrame {
 
     private void registrasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrasiActionPerformed
         // TODO add your handling code here:
-        String nim = tfNimMhs.getText();
+        String[] nim = tfNimMhs.getText().split(",", new CRUD().hitungMuncul(tfNimMhs.getText(), ','));
         int idKeahlian = Integer.parseInt(new ListData().getAllKeahlian()[0][mataKeahlian.getSelectedIndex()]);
         String judulPa = tfJudulPa.getText();
         String dosenPembimbing1 = dosbing1.getSelectedItem().toString();
         String dosenPembimbing2 = dosbing2.getSelectedItem().toString();
         int tahunSidangg = Integer.parseInt(tahunSidang.getSelectedItem().toString());
         int periodSidang = Integer.parseInt(periodeSidang.getSelectedItem().toString());
-        
+        System.out.println(nim[2]);
       //  new JadwalSidang().registrasi(nama,nim,idKeahlian,email,dosenPembimbing1,dosenPembimbing2,tahunSidangg,periodSidang);
         
        

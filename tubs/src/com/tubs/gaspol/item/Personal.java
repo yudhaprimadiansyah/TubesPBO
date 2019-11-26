@@ -12,12 +12,10 @@ package com.tubs.gaspol.item;
 public class Personal {
     private String name;
     private String email;
-    private int idKeahlian;
-
-    public Personal(String name, String email, int idKeahlian) {
+    
+    public Personal(String name, String email) {
         this.name = name;
         this.email = email;
-        this.idKeahlian = idKeahlian;
     }
 
     public String getName() {
@@ -36,13 +34,6 @@ public class Personal {
         this.email = email;
     }
 
-    public int getIdKeahlian() {
-        return idKeahlian;
-    }
-
-    public void setIdKeahlian(int idKeahlian) {
-        this.idKeahlian = idKeahlian;
-    }
     
     
     

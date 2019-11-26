@@ -408,6 +408,8 @@ public class UserHome extends javax.swing.JFrame {
 
     private void registrasiMahasiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrasiMahasiswaActionPerformed
         // TODO add your handling code here:
+        new RegistrasiMahasiswa().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_registrasiMahasiswaActionPerformed
 
     /**

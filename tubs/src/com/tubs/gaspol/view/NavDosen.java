@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author DORIZU
@@ -27,7 +28,7 @@ public class NavDosen extends javax.swing.JFrame {
      * Creates new form AdminDashboard
      */
     private DefaultTableModel model = new DefaultTableModel();
-    private ArrayList<Dosen> listDosen = new ListData().getAllDosen();
+    
     
     public NavDosen() {
         initComponents();
@@ -49,7 +50,7 @@ public class NavDosen extends javax.swing.JFrame {
     
     private void tampilDosen(){
         model.setRowCount(0);
-        for(Dosen d: listDosen){
+        for(Dosen d: new ListData().getAllDosen()){
             model.addRow(new Object[]{d.getName(), d.getKodeDosen(), d.getNip(), d.getIdKeahlian(), d.getEmail()});
         }
     }
@@ -88,13 +89,13 @@ public class NavDosen extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        tfNama = new javax.swing.JTextField();
+        tfEmail = new javax.swing.JTextField();
+        tfIDKeahlian = new javax.swing.JTextField();
+        tfKode = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        tfNip = new javax.swing.JTextField();
+        btnSimpan = new javax.swing.JButton();
         background = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
         HomeUser = new javax.swing.JPanel();
@@ -284,6 +285,11 @@ public class NavDosen extends javax.swing.JFrame {
         );
 
         editDosen.setPreferredSize(new java.awt.Dimension(106, 80));
+        editDosen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editDosenMouseClicked(evt);
+            }
+        });
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Edit Dosen");
@@ -312,17 +318,22 @@ public class NavDosen extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel2.setText("jLabel2");
+        jLabel2.setText("ID Keahlian");
 
-        jLabel3.setText("jLabel3");
+        jLabel3.setText("Nama");
 
-        jLabel11.setText("jLabel11");
+        jLabel11.setText("Email");
 
-        jLabel15.setText("jLabel15");
+        jLabel15.setText("Kode Dosen");
 
-        jLabel16.setText("jLabel16");
+        jLabel16.setText("NIP");
 
-        jButton1.setText("Simpan");
+        btnSimpan.setText("Simpan");
+        btnSimpan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSimpanMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -334,29 +345,29 @@ public class NavDosen extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(30, 30, 30)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tfNama, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tfKode, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfIDKeahlian, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel16)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tfNip, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnSimpan)
                 .addGap(50, 50, 50))
         );
         jPanel3Layout.setVerticalGroup(
@@ -366,18 +377,18 @@ public class NavDosen extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfNama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfIDKeahlian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfNip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(1, 1, 1)
-                .addComponent(jButton1)
+                .addComponent(btnSimpan)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(jLabel15)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfKode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
 
@@ -546,8 +557,32 @@ public class NavDosen extends javax.swing.JFrame {
 
     private void addDosenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addDosenMouseClicked
         // TODO add your handling code here:
-        new CRUD().tambahDosen("","",0,"","");
+        
     }//GEN-LAST:event_addDosenMouseClicked
+
+    private void btnSimpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseClicked
+        // TODO add your handling code here:
+        String nama = tfNama.getText();
+        String email = tfEmail.getText();
+        String idKeahlian = tfIDKeahlian.getText();
+        String kodeDosen = tfKode.getText();
+        String nip = tfNip.getText();
+        
+        int rslt = new CRUD().tambahDosen(nama, email, idKeahlian, kodeDosen,nip);
+        System.out.println(rslt);
+        if(rslt > 0){
+            JOptionPane.showMessageDialog(this, "Input Berhasil");
+            
+            tampilDosen();
+        }else{
+            JOptionPane.showMessageDialog(this, "Input Gagal");
+        }
+    }//GEN-LAST:event_btnSimpanMouseClicked
+
+    private void editDosenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editDosenMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_editDosenMouseClicked
 
     /**
      * @param args the command line arguments
@@ -596,8 +631,8 @@ public class NavDosen extends javax.swing.JFrame {
     private javax.swing.JPanel addDosen;
     private javax.swing.JPanel background;
     private javax.swing.JPanel bt_nav_dosen;
+    private javax.swing.JButton btnSimpan;
     private javax.swing.JPanel editDosen;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -619,15 +654,15 @@ public class NavDosen extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel logo;
     private javax.swing.JPanel nav_jadwal_dosen;
     private javax.swing.JPanel nav_jadwal_sidang;
     private javax.swing.JPanel nav_ruang;
     private javax.swing.JTable tblDosen;
+    private javax.swing.JTextField tfEmail;
+    private javax.swing.JTextField tfIDKeahlian;
+    private javax.swing.JTextField tfKode;
+    private javax.swing.JTextField tfNama;
+    private javax.swing.JTextField tfNip;
     // End of variables declaration//GEN-END:variables
 }

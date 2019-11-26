@@ -32,7 +32,7 @@ public class ListData {
         loadKeahlian();
     }
     
-    private void loadDosen(){
+    public void loadDosen(){
         if(conn != null){
             listDosen = new ArrayList<>();
             String query = "SELECT * FROM dosen";

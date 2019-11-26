@@ -29,22 +29,25 @@ public class CRUD {
     
     }
     
-    public void tambahDosen(String nama, String email, int idKeahlian, String kodeDosen,String nip){
+    public int tambahDosen(String nama, String email, String idKeahlian, String kodeDosen,String nip){
+        int hasil = 0;
         if(conn != null){
             try{
                 String query = "INSERT INTO dosen(nama, email, id_keahlian, kode_dosen, nip) VALUES (?,?,?,?,?)";
                 PreparedStatement ps = conn.prepareStatement(query);
                 ps.setString(1, nama);
                 ps.setString(2, email);
-                ps.setInt(3, idKeahlian);
+                ps.setString(3, idKeahlian);
                 ps.setString(4, kodeDosen);
                 ps.setString(5, nip);
-                int hasil = ps.executeUpdate();
+                hasil = ps.executeUpdate();
                 
             }catch(SQLException e){
+                
                 Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, e);
             }
         }
+        return hasil;
     }
     
     private void tambahMahasiswa(String nama, String email, String nim){

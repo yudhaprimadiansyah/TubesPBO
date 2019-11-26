@@ -50,7 +50,7 @@ public class CRUD {
         return hasil;
     }
     
-    private void tambahMahasiswa(String nama, String email, String nim){
+    public void tambahMahasiswa(String nim, String nama, String email){
         if(conn != null){
             try{
                 String query = "INSERT INTO mahasiswa(nama, email, nim) VALUES (?,?,?)";
@@ -66,7 +66,7 @@ public class CRUD {
         }
     }
     
-    private void tambahJadwalDosen(String jamMulai, String jamSelesai, int hariKe){
+    public void tambahJadwalDosen(String jamMulai, String jamSelesai, int hariKe){
         if(conn != null){
             try{
                 String query = "INSERT INTO jadwal_mengajar_dosen(jam_mulai, jam_selesai, hari_ke) VALUES (?,?,?)";
@@ -82,7 +82,7 @@ public class CRUD {
         }
     }
     
-    private void tambahJadwalSidang(String jamMulai, String jamSelesai, String tanggal, int idPenguji1, int idPenguji2, int idRuang, int idPa, int idPeriode){
+    public void tambahJadwalSidang(String jamMulai, String jamSelesai, String tanggal, int idPenguji1, int idPenguji2, int idRuang, int idPa, int idPeriode){
         if(conn != null){
             try{
                 String query = "INSERT INTO jadwal_sidang(jam_mulai, jam_selesai, tanggal, id_penguji1, id_penguji2, id_ruang, id_pa, id_periode) VALUES (?,?,?,?,?,?,?,?)";
@@ -104,7 +104,7 @@ public class CRUD {
         }
     }
     
-    private void tambahKeahlian(String namaKeahlian){
+    public void tambahKeahlian(String namaKeahlian){
         if(conn != null){
             try{
                 String query = "INSERT INTO keahlian(nama_keahlian) VALUES (?)";
@@ -119,7 +119,7 @@ public class CRUD {
         }
     }
     
-    private void tambahPengelola(String username, String password, String nama, String nip){
+    public void tambahPengelola(String username, String password, String nama, String nip){
         if(conn != null){
             try{
                 String query = "INSERT INTO pengelola(username, password, nama, nip) VALUES (?,?,?,?)";
@@ -137,7 +137,7 @@ public class CRUD {
         }
     }
     
-    private void tambahPeriodeSidang(String tahun, String tanggalAwal, String tanggalAkhir, String periode){
+    public void tambahPeriodeSidang(String tahun, String tanggalAwal, String tanggalAkhir, String periode){
         if(conn != null){
             try{
                 String query = "INSERT INTO periode_sidang(tahun, tanggal_awal, tanggal_akhir, periode_ke) VALUES (?,?,?,?)";
@@ -155,7 +155,7 @@ public class CRUD {
         }
     }
     
-    private void tambahPa(String judul, String idDosbing1, String idDosbing2, String keahlian){
+    public void tambahPa(String judul, String idDosbing1, String idDosbing2, String keahlian){
         if(conn != null){
             try{
                 String query = "INSERT INTO proyek_akhir(judul, id_dosbing1, id_dosbing2, id_keahlian, nim) VALUES (?,?,?,?,?)";
@@ -173,7 +173,7 @@ public class CRUD {
         }
     }
     
-    private void tambahRuang(String nama){
+    public void tambahRuang(String nama){
         if(conn != null){
             try{
                 String query = "INSERT INTO ruangan(nama) VALUES (?)";
@@ -189,7 +189,7 @@ public class CRUD {
         }
     }
     
-    private void updateDosen(int id, String nama, String email, int idKeahlian, String kodeDosen,String nip){
+    public void updateDosen(int id, String nama, String email, int idKeahlian, String kodeDosen,String nip){
         if(conn != null){
             try{
                 String query = "UPDATE dosen SET nama=?, email=?, id_keahlian=?, kode_dosen=?, nip=? WHERE id=?";
@@ -208,7 +208,7 @@ public class CRUD {
         }
     }
     
-    private void updateMahasiswa(String nama, String email, String nim){
+    public void updateMahasiswa(String nama, String email, String nim){
         if(conn != null){
             try{
                 String query = "UPDATE mahasiswa nama=?, email=? WHERE nim=?";

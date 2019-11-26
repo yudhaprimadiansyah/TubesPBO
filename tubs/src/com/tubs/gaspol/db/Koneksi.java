@@ -22,8 +22,8 @@ public class Koneksi {
     private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DB_NAME = "gaspol_tubes";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/"+DB_NAME;
-    private static final String DB_UNAME = "tubes";
-    private static final String DB_PASS = "tubes2019!";
+    private static final String DB_UNAME = "root";
+    private static final String DB_PASS = "";
     
     public static Connection bukaKoneksi(){
         if(conn == null){
@@ -60,6 +60,7 @@ public class Koneksi {
         } catch (SQLException ex) {
             Logger.getLogger(Koneksi.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return total;
     
     }

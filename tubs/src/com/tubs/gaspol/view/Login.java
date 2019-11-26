@@ -185,7 +185,7 @@ public class Login extends javax.swing.JFrame {
                 }
                 if(loged == true){
                     JOptionPane.showMessageDialog(this, "Login Berhasil");
-                    new AdminDashboard().setVisible(true);
+                    new NavDosen().setVisible(true);
                     this.dispose();
                 }
                 else {

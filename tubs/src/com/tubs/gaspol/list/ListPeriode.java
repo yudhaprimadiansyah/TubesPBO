@@ -7,7 +7,7 @@ package com.tubs.gaspol.list;
 
 import com.tubs.gaspol.db.Koneksi;
 import com.tubs.gaspol.item.Dosen;
-import com.tubs.gaspol.view.AdminDashboard;
+import com.tubs.gaspol.view.NavDosen;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

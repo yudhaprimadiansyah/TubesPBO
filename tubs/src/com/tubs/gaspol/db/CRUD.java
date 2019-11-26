@@ -211,7 +211,8 @@ public class CRUD {
         return hasil;
     }
     
-    public void updateMahasiswa(String nama, String email, String nim){
+    public int updateMahasiswa(String nama, String email, String nim){
+        int hasil = 0;
         if(conn != null){
             try{
                 String query = "UPDATE mahasiswa nama=?, email=? WHERE nim=?";
@@ -219,12 +220,24 @@ public class CRUD {
                 ps.setString(1, nama);
                 ps.setString(2, email);
                 ps.setString(3, nim);
-                int hasil = ps.executeUpdate();
+                hasil = ps.executeUpdate();
                 
             }catch(SQLException e){
                 Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, e);
             }
         }
+        return hasil;
+    }
+    
+    public int hitungMuncul(String tfNimMhs, char c) {
+         //To change body of generated methods, choose Tools | Templates.
+         int count = 0;
+         for(int i=0;i<tfNimMhs.length();i++){
+             if(tfNimMhs.charAt(i) == c){
+                 count++;
+             }
+         }
+         return count+1;
     }
     
     public boolean sudahTerdaftarSidang(String nim){
@@ -246,16 +259,6 @@ public class CRUD {
         return sudah;
     }
 
-    public int hitungMuncul(String tfNimMhs, char c) {
-         //To change body of generated methods, choose Tools | Templates.
-         int count = 0;
-         for(int i=0;i<tfNimMhs.length();i++){
-             if(tfNimMhs.charAt(i) == c){
-                 count++;
-             }
-         }
-         return count+1;
-    }
     
     
     

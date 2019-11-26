@@ -577,14 +577,13 @@ public class NavDosen extends javax.swing.JFrame {
             System.out.println(rslt);
             if(rslt > 0){
                 JOptionPane.showMessageDialog(this, "Input Berhasil");
-
                 tampilDosen();
             }else{
                 JOptionPane.showMessageDialog(this, "Input Gagal");
             }
         }else{
             int baris = tblDosen.getSelectedRow();
-            int hasil = new CRUD().updateDosen(1,nama, email, idKeahlian, kodeDosen,nip);
+            int hasil = new CRUD().updateDosen(new ListData().getAllDosen().get(baris).getId(),nama, email, idKeahlian, kodeDosen,nip);
         }
     }//GEN-LAST:event_btnSimpanMouseClicked
     

@@ -26,7 +26,7 @@ public class AdminDashboard extends javax.swing.JFrame {
      * Creates new form AdminDashboard
      */
     private DefaultTableModel model = new DefaultTableModel();
-    private ArrayList<Dosen> listDosen = new ListDosen().getAllDosen();
+    private ArrayList<Dosen> listDosen = new ListData().getAllDosen();
     
     public AdminDashboard() {
         initComponents();

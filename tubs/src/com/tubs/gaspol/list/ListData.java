@@ -7,6 +7,7 @@ package com.tubs.gaspol.list;
 
 import com.tubs.gaspol.db.Koneksi;
 import com.tubs.gaspol.item.Dosen;
+import com.tubs.gaspol.item.Keahlian;
 import com.tubs.gaspol.view.AdminDashboard;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,13 +21,15 @@ import java.util.logging.Logger;
  *
  * @author seifer
  */
-public class ListDosen {
+public class ListData {
     private ArrayList<Dosen> listDosen;
+    private ArrayList<Keahlian> listKeahlian;
     private Connection conn;
     
-    public ListDosen(){
+    public ListData(){
         this.conn = new Koneksi().bukaKoneksi();
         loadDosen();
+        loadKeahlian();
     }
     
     private void loadDosen(){
@@ -58,6 +61,20 @@ public class ListDosen {
         return this.listDosen;
     }
     
+    
+    public Object[] getKodeAllDosen(){
+        
+        ArrayList<String> kodeDosen = new ArrayList<>();
+        
+        for(Dosen kd: listDosen){
+                kodeDosen.add(kd.getKodeDosen());
+            
+            
+        }
+        Object[] listKodeDosen = kodeDosen.toArray();
+        return listKodeDosen;
+    }
+    
     public Object[] getKodeAllDosenByKeahlian(int idKeahlian){
         
         ArrayList<String> kodeDosen = new ArrayList<>();
@@ -72,4 +89,39 @@ public class ListDosen {
         return listKodeDosen;
     }
     
+    private void loadKeahlian(){
+        System.out.println(conn);
+        if(conn != null){
+            String query = "SELECT * FROM keahlian";
+            try {
+                this.listKeahlian = new ArrayList<>();
+                PreparedStatement ps = this.conn.prepareStatement(query);
+                ResultSet res = ps.executeQuery();
+                while(res.next()){
+                    int id = res.getInt("id");
+                    String namaKeahlian = res.getString("nama_keahlian");
+                    this.listKeahlian.add(new Keahlian(id,namaKeahlian));
+                }
+                res.close();
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ListData.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        }
+    }
+    
+    public String[][] getAllKeahlian(){
+        String[][] keahlians = new String[2][listKeahlian.size()];
+        ArrayList<String> idList = new ArrayList<>();
+        ArrayList<String> keahlianList = new ArrayList<>();
+        for(Keahlian k:this.listKeahlian){
+            idList.add(Integer.toString(k.getId()));
+            keahlianList.add(k.getNamaKeahlian());
+        }
+        
+       idList.toArray(keahlians[0]);
+       keahlianList.toArray(keahlians[1]);
+       return keahlians;
+    }
 }

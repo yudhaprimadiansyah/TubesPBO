@@ -22,8 +22,8 @@ public class Mahasiswa extends Personal {
     private Connection conn = Koneksi.bukaKoneksi();
     private String nim;
     
-    public Mahasiswa(String nim, String name, String email, int idKeahlian) {
-        super(name, email, idKeahlian);
+    public Mahasiswa(String nim, String name, String email) {
+        super(name, email);
         this.nim = nim;
     }
     
@@ -35,7 +35,6 @@ public class Mahasiswa extends Personal {
             ps.setString(1, super.getName());
             ps.setString(2, super.getEmail());
             ps.setString(3, this.nim);
-            ps.setInt(4, super.getIdKeahlian());
             ps.executeQuery();
             ps.close();
         } catch (SQLException ex) {

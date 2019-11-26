@@ -5,6 +5,7 @@ import com.tubs.gaspol.list.*;
 import com.tubs.gaspol.db.Koneksi;
 import java.sql.Connection;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -357,14 +358,28 @@ public class UserHome extends javax.swing.JFrame {
 
     private void registrasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrasiActionPerformed
         // TODO add your handling code here:
+        boolean sudah = true;
+        String nimnya = "";
         String[] nim = tfNimMhs.getText().split(",", new CRUD().hitungMuncul(tfNimMhs.getText(), ','));
-        int idKeahlian = Integer.parseInt(new ListData().getAllKeahlian()[0][mataKeahlian.getSelectedIndex()]);
-        String judulPa = tfJudulPa.getText();
-        String dosenPembimbing1 = dosbing1.getSelectedItem().toString();
-        String dosenPembimbing2 = dosbing2.getSelectedItem().toString();
-        int tahunSidangg = Integer.parseInt(tahunSidang.getSelectedItem().toString());
-        int periodSidang = Integer.parseInt(periodeSidang.getSelectedItem().toString());
-        System.out.println(nim[2]);
+        for(String n:nim){
+            if(new CRUD().sudahTerdaftarSidang(n)){
+                sudah = true;
+                nimnya += n+",";
+            }
+        }
+        if(sudah == false){
+            int idKeahlian = Integer.parseInt(new ListData().getAllKeahlian()[0][mataKeahlian.getSelectedIndex()]);
+            String judulPa = tfJudulPa.getText();
+            String dosenPembimbing1 = dosbing1.getSelectedItem().toString();
+            String dosenPembimbing2 = dosbing2.getSelectedItem().toString();
+            int tahunSidangg = Integer.parseInt(tahunSidang.getSelectedItem().toString());
+            int periodSidang = Integer.parseInt(periodeSidang.getSelectedItem().toString());
+            new CRUD().tambahPa(judulPa, dosenPembimbing1, dosenPembimbing2, idKeahlian);
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "NIM : "+nimnya+" Sudah Terdaftar Sidang");
+        }
+        
       //  new JadwalSidang().registrasi(nama,nim,idKeahlian,email,dosenPembimbing1,dosenPembimbing2,tahunSidangg,periodSidang);
         
        

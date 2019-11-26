@@ -19,7 +19,7 @@ public class Enkripsi {
 
     public String hash(String plain){
         try {
-            this.hash = MessageDigest.getInstance("SHA-1");
+            this.hash = MessageDigest.getInstance("SHA1");
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(Enkripsi.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -7,7 +7,11 @@ package com.tubs.gaspol.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,6 +40,27 @@ public class Koneksi {
             
         }
         return conn;
+    
+    }
+    
+    public static int countRow(String table) throws SQLException{
+        Connection connect = bukaKoneksi();
+        String query = "SELECT COUNT(*) AS jumlah FROM ?";
+        PreparedStatement ps;
+        int total = 0;
+        try {
+            ps = connect.prepareStatement(query);
+            ps.setString(0, table);
+            ResultSet jumlah = ps.executeQuery();
+            while(jumlah.next()){
+                total += jumlah.getInt("jumlah");
+            }
+            jumlah.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Koneksi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return total;
     
     }
     

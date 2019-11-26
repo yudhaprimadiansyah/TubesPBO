@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import com.tubs.gaspol.item.*;
+import com.tubs.gaspol.list.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,20 +26,16 @@ public class AdminDashboard extends javax.swing.JFrame {
      * Creates new form AdminDashboard
      */
     private DefaultTableModel model = new DefaultTableModel();
-    private Connection conn;
-    private ArrayList<Dosen> listDosen;
+    private ArrayList<Dosen> listDosen = new ListDosen().getAllDosen();
     
     public AdminDashboard() {
         initComponents();
         loadKolom();
         tblDosen.setModel(model);
-        conn = Koneksi.bukaKoneksi();
-        loadDosen();
         tampilDosen();
     }
     
     private void loadKolom(){
-        model.addColumn("ID");
         model.addColumn("Nama");
         model.addColumn("Kode Dosen");
         model.addColumn("NIP");
@@ -47,35 +44,12 @@ public class AdminDashboard extends javax.swing.JFrame {
         
     }
     
-    private void loadDosen(){
-        if(conn != null){
-            listDosen = new ArrayList<>();
-            String query = "SELECT * FROM dosen";
-            try{
-                PreparedStatement ps = conn.prepareStatement(query);
-                ResultSet rs = ps.executeQuery();
-                while(rs.next()){
-                    int id = rs.getInt("id");
-                    String nama = rs.getString("nama");
-                    String kode = rs.getString("kode_dosen");
-                    String nip = rs.getString("nip");
-                    int idKeahlian = rs.getInt("id_keahlian");
-                    String email = rs.getString("email");
-                    Dosen dosen = new Dosen(kode,nip,id,nama,email,idKeahlian);
-                    listDosen.add(dosen);
-                }
-                rs.close();
-                ps.close();
-            }catch(SQLException e){
-                Logger.getLogger(AdminDashboard.class.getName()).log(Level.SEVERE, null, e);
-            }
-        }
-    }
+    
     
     private void tampilDosen(){
         model.setRowCount(0);
-        for(Dosen d:listDosen){
-            model.addRow(new Object[]{d.getId(), d.getName(), d.getKodeDosen(), d.getNip(), d.getIdKeahlian(), d.getEmail()});
+        for(Dosen d: listDosen){
+            model.addRow(new Object[]{d.getName(), d.getKodeDosen(), d.getNip(), d.getIdKeahlian(), d.getEmail()});
         }
     }
 

@@ -21,13 +21,14 @@ import javax.swing.JOptionPane;
  * @author seifer
  */
 public class Login extends javax.swing.JFrame {
-
+    private Connection conn;
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
         this.setTitle("Log In Pengelolaan");
+        this.conn = Koneksi.bukaKoneksi();
     }
 
     /**
@@ -165,34 +166,38 @@ public class Login extends javax.swing.JFrame {
         
         String user = username.getText();
         
-        String pass = new Enkripsi().hash(Arrays.toString(password.getPassword()));
+        String pass = new Enkripsi().hash(String.valueOf(password.getPassword()));
        
         if(username.getText().equals("") || password.getPassword().toString().equals("")){
             JOptionPane.showMessageDialog(this, "Username Atau Password Tidak Boleh Kosong");
         }
         else {
-            Connection conn = Koneksi.bukaKoneksi();
-            String query = "SELECT * FROM pengelola WHERE username = "+user;
+            String query = "SELECT * FROM pengelola WHERE username = '"+user+"'";
             try {
-                PreparedStatement ps = conn.prepareStatement(query);
+                PreparedStatement ps = this.conn.prepareStatement(query);
                 ResultSet res = ps.executeQuery();
+                boolean loged = false;
                 while(res.next()){
                     if(res.getString("username").equals(user) && res.getString("password").equals(pass)){
-                        JOptionPane.showMessageDialog(this, "Login Berhasil");
-                        new AdminDashboard().setVisible(true);
-                        this.dispose();
+                        loged = true;
                         break;
                     }
-                    else {
-                        JOptionPane.showMessageDialog(this, "Login Gagal");
-                    }
+                }
+                if(loged == true){
+                    JOptionPane.showMessageDialog(this, "Login Berhasil");
+                    new AdminDashboard().setVisible(true);
+                    this.dispose();
+                }
+                else {
+                    JOptionPane.showMessageDialog(this, "Login Gagal");
                 }
                 res.close();
                 ps.close();
 
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Terdapat Masalah Ke Database");
+                JOptionPane.showMessageDialog(this, "Terdapat Masalah Ke Database"+ex.toString());
             }
+           
         }
         
     }//GEN-LAST:event_loginButtonActionPerformed

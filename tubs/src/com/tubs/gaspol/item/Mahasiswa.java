@@ -5,17 +5,43 @@
  */
 package com.tubs.gaspol.item;
 
+import com.tubs.gaspol.db.Koneksi;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author DORIZU
  */
 public class Mahasiswa extends Personal {
    
+    private Connection conn = Koneksi.bukaKoneksi();
     private String nim;
-
-    public Mahasiswa(String nim, int id, String name, String email, int idKeahlian) {
-        super(id, name, email, idKeahlian);
+    
+    public Mahasiswa(String nim, String name, String email, int idKeahlian) {
+        super(name, email, idKeahlian);
         this.nim = nim;
+    }
+    
+    public void insertMahasiswa(){
+        String query = "INSERT INTO mahasiswa (nama,email,nim,id_keahlian) VALUES ('?','?','?',?)";
+        PreparedStatement ps;
+        try {
+            ps = this.conn.prepareStatement(query);
+            ps.setString(1, super.getName());
+            ps.setString(2, super.getEmail());
+            ps.setString(3, this.nim);
+            ps.setInt(4, super.getIdKeahlian());
+            ps.executeQuery();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Mahasiswa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
     }
 
     public String getNim() {

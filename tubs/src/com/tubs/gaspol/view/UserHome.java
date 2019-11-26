@@ -1,5 +1,8 @@
 package com.tubs.gaspol.view;
-import com.tubs.gaspol.*;
+import com.tubs.gaspol.list.*;
+import com.tubs.gaspol.db.Koneksi;
+import java.sql.Connection;
+import javax.swing.DefaultComboBoxModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,8 +20,28 @@ public class UserHome extends javax.swing.JFrame {
     /**
      * Creates new form UserHome
      */
+    
+    private Connection conn;
+    private String[] listDosen;
+    private String[] listDosbing;
     public UserHome() {
         initComponents();
+        this.setTitle("Registrasi Sidang Mahasiswa");
+        this.conn = Koneksi.bukaKoneksi();
+        
+        DefaultComboBoxModel keahlians = new DefaultComboBoxModel(new ListKeahlian().getAllKeahlian()[1]);
+        
+        mataKeahlian.setModel(keahlians);
+        DefaultComboBoxModel kodeDosens = new DefaultComboBoxModel(new ListDosen().getKodeAllDosenByKeahlian(Integer.parseInt(new ListKeahlian().getAllKeahlian()[0][mataKeahlian.getSelectedIndex()])));
+        DefaultComboBoxModel kodeDosens2 = new DefaultComboBoxModel(new ListDosen().getKodeAllDosenByKeahlian(Integer.parseInt(new ListKeahlian().getAllKeahlian()[0][mataKeahlian.getSelectedIndex()])));
+        dosbing1.setModel(kodeDosens);
+        dosbing2.setModel(kodeDosens2);
+        
+        DefaultComboBoxModel tahuns = new DefaultComboBoxModel(new ListPeriode().getAllTahunSidang());
+        tahunSidang.setModel(tahuns);
+        //System.out.println(tahunSidang.getSelectedItem());
+        DefaultComboBoxModel periodes = new DefaultComboBoxModel(new ListPeriode().getPeriode((Integer)tahunSidang.getSelectedItem()));
+        periodeSidang.setModel(periodes);
     }
 
     /**
@@ -41,23 +64,18 @@ public class UserHome extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         tfNamaMhs = new javax.swing.JTextField();
         tfNimMhs = new javax.swing.JTextField();
-        tfKeahlianMhs = new javax.swing.JTextField();
         tfJudulPa = new javax.swing.JTextField();
         tfEmailMhs = new javax.swing.JTextField();
-        cbDosbing1 = new javax.swing.JComboBox();
-        cbDosbing2 = new javax.swing.JComboBox();
-        jPanel5 = new javax.swing.JPanel();
+        registrasi = new javax.swing.JButton();
+        mataKeahlian = new javax.swing.JComboBox<>();
+        dosbing2 = new javax.swing.JComboBox<>();
+        dosbing1 = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
-        tfJamMulai = new javax.swing.JTextField();
-        tfJamAkhir = new javax.swing.JTextField();
+        tahunSidang = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
-        tfTglMulai = new javax.swing.JTextField();
-        tfTglAkhir = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        periodeSidang = new javax.swing.JComboBox<>();
         background = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
-        HomeAdmin = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         HomeUser = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -98,69 +116,57 @@ public class UserHome extends javax.swing.JFrame {
         jLabel13.setForeground(new java.awt.Color(153, 153, 153));
         jLabel13.setText("Dosen Pembimbing 2");
 
-        cbDosbing1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        registrasi.setBackground(new java.awt.Color(221, 89, 89));
+        registrasi.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        registrasi.setForeground(new java.awt.Color(255, 255, 255));
+        registrasi.setText("Registrasi");
+        registrasi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrasiActionPerformed(evt);
+            }
+        });
 
-        cbDosbing2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        mataKeahlian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        mataKeahlian.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                mataKeahlianItemStateChanged(evt);
+            }
+        });
+        mataKeahlian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mataKeahlianActionPerformed(evt);
+            }
+        });
 
-        jPanel5.setBackground(new java.awt.Color(231, 231, 231));
+        dosbing2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                dosbing2ItemStateChanged(evt);
+            }
+        });
+
+        dosbing1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dosbing1ActionPerformed(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel14.setText("Customisasi Waktu");
+        jLabel14.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel14.setText("Tahun Sidang");
+
+        tahunSidang.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                tahunSidangItemStateChanged(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel15.setText("Sampai");
+        jLabel15.setText("Periode Ke");
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(tfJamAkhir, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfJamMulai, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfTglMulai, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfTglAkhir, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(128, 128, 128)
-                        .addComponent(jLabel15)))
-                .addGap(48, 48, 48))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(144, 144, 144)
-                .addComponent(jLabel14)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfJamMulai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfTglMulai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfJamAkhir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfTglAkhir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
-
-        jButton1.setBackground(new java.awt.Color(221, 89, 89));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("GENERATED");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        periodeSidang.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                periodeSidangItemStateChanged(evt);
             }
         });
 
@@ -168,37 +174,55 @@ public class UserHome extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel13))
-                        .addGap(88, 88, 88)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfEmailMhs)
-                            .addComponent(tfJudulPa)
-                            .addComponent(tfKeahlianMhs)
-                            .addComponent(tfNimMhs)
-                            .addComponent(tfNamaMhs)
-                            .addComponent(cbDosbing1, 0, 298, Short.MAX_VALUE)
-                            .addComponent(cbDosbing2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(83, 83, 83)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(533, 533, 533)
-                        .addComponent(jButton1)))
-                .addContainerGap(66, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel7)
-                .addGap(455, 455, 455))
+                .addGap(391, 391, 391))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(59, 339, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(registrasi)
+                        .addGap(459, 459, 459))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(periodeSidang, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tahunSidang, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dosbing2, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dosbing1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tfEmailMhs, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tfJudulPa, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(mataKeahlian, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(238, 238, 238)
+                                .addComponent(tfNamaMhs, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tfNimMhs, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(235, 235, 235))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,7 +230,7 @@ public class UserHome extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -215,30 +239,37 @@ public class UserHome extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(tfNimMhs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(tfKeahlianMhs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(tfJudulPa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(tfEmailMhs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9)
+                        .addGap(6, 6, 6))
+                    .addComponent(mataKeahlian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(tfJudulPa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(tfEmailMhs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(cbDosbing1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dosbing1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(cbDosbing2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(37, 37, 37))
+                    .addComponent(dosbing2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(tahunSidang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel15)
+                    .addComponent(periodeSidang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addComponent(registrasi)
+                .addGap(40, 40, 40))
         );
 
         background.setBackground(new java.awt.Color(221, 89, 89));
@@ -246,36 +277,6 @@ public class UserHome extends javax.swing.JFrame {
         logo.setFont(new java.awt.Font("Segoe UI Black", 0, 48)); // NOI18N
         logo.setForeground(new java.awt.Color(255, 255, 255));
         logo.setText("SidangAja.");
-
-        HomeAdmin.setBackground(new java.awt.Color(221, 89, 89));
-        HomeAdmin.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        HomeAdmin.setPreferredSize(new java.awt.Dimension(90, 90));
-        HomeAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                HomeAdminMouseClicked(evt);
-            }
-        });
-
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Exit");
-
-        javax.swing.GroupLayout HomeAdminLayout = new javax.swing.GroupLayout(HomeAdmin);
-        HomeAdmin.setLayout(HomeAdminLayout);
-        HomeAdminLayout.setHorizontalGroup(
-            HomeAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(HomeAdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        HomeAdminLayout.setVerticalGroup(
-            HomeAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(HomeAdminLayout.createSequentialGroup()
-                .addContainerGap(59, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addContainerGap())
-        );
 
         HomeUser.setBackground(new java.awt.Color(221, 89, 89));
         HomeUser.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -319,9 +320,7 @@ public class UserHome extends javax.swing.JFrame {
         backgroundLayout.setHorizontalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundLayout.createSequentialGroup()
-                .addGap(181, 181, 181)
-                .addComponent(HomeAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(680, 680, 680)
+                .addGap(968, 968, 968)
                 .addComponent(logo)
                 .addContainerGap(88, Short.MAX_VALUE))
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,13 +332,8 @@ public class UserHome extends javax.swing.JFrame {
         backgroundLayout.setVerticalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundLayout.createSequentialGroup()
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backgroundLayout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(HomeAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(backgroundLayout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addComponent(logo)))
+                .addGap(72, 72, 72)
+                .addComponent(logo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(backgroundLayout.createSequentialGroup()
@@ -364,29 +358,66 @@ public class UserHome extends javax.swing.JFrame {
                 .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 68, Short.MAX_VALUE))
+                .addGap(0, 62, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void registrasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrasiActionPerformed
         // TODO add your handling code here:
+        String nama = tfNamaMhs.getText();
+        String nim = tfNimMhs.getText();
+        int idKeahlian = Integer.parseInt(new ListKeahlian().getAllKeahlian()[0][mataKeahlian.getSelectedIndex()]);
+        String judulPa = tfJudulPa.getText();
+        String email = tfEmailMhs.getText();
+        String dosenPembimbing1 = dosbing1.getSelectedItem().toString();
+        String dosenPembimbing2 = dosbing2.getSelectedItem().toString();
+        int tahunSidangg = Integer.parseInt(tahunSidang.getSelectedItem().toString());
+        int periodSidang = Integer.parseInt(periodeSidang.getSelectedItem().toString());
+        
+      //  new JadwalSidang().registrasi(nama,nim,idKeahlian,email,dosenPembimbing1,dosenPembimbing2,tahunSidangg,periodSidang);
+        
        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void HomeAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeAdminMouseClicked
-        // TODO add your handling code here:
-        new Main().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_HomeAdminMouseClicked
+    }//GEN-LAST:event_registrasiActionPerformed
 
     private void HomeUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeUserMouseClicked
         // TODO add your handling code here:
-        UserHome user = new UserHome();
-        user.show();
+        new Main().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_HomeUserMouseClicked
+
+    private void mataKeahlianItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_mataKeahlianItemStateChanged
+        // TODO add your handling code here:
+       
+        //int idKeahlian = new ListKeahlian().getAllKeahlianlian()[0][Integer.parseInt(mataKeahlian.getSelectedIndex())];
+        //DefaultComboBoxModel kodeDosens = new DefaultComboBoxModel(new ListDosen().getKodeAllDosenByKeahlian(idKeahlian));
+    }//GEN-LAST:event_mataKeahlianItemStateChanged
+
+    private void dosbing2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_dosbing2ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dosbing2ItemStateChanged
+
+    private void dosbing1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dosbing1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dosbing1ActionPerformed
+
+    private void mataKeahlianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mataKeahlianActionPerformed
+        // TODO add your handling code here:
+        DefaultComboBoxModel kodeDosens = new DefaultComboBoxModel(new ListDosen().getKodeAllDosenByKeahlian(Integer.parseInt(new ListKeahlian().getAllKeahlian()[0][mataKeahlian.getSelectedIndex()])));
+        DefaultComboBoxModel kodeDosens2 = new DefaultComboBoxModel(new ListDosen().getKodeAllDosenByKeahlian(Integer.parseInt(new ListKeahlian().getAllKeahlian()[0][mataKeahlian.getSelectedIndex()])));
+        dosbing1.setModel(kodeDosens);
+        dosbing2.setModel(kodeDosens2);
+        
+    }//GEN-LAST:event_mataKeahlianActionPerformed
+
+    private void tahunSidangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tahunSidangItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tahunSidangItemStateChanged
+
+    private void periodeSidangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_periodeSidangItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_periodeSidangItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -422,14 +453,13 @@ public class UserHome extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel HomeAdmin;
     private javax.swing.JPanel HomeUser;
     private javax.swing.JPanel background;
-    private javax.swing.JComboBox cbDosbing1;
-    private javax.swing.JComboBox cbDosbing2;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> dosbing1;
+    private javax.swing.JComboBox<String> dosbing2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -437,23 +467,20 @@ public class UserHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel logo;
+    private javax.swing.JComboBox<String> mataKeahlian;
+    private javax.swing.JComboBox<String> periodeSidang;
+    private javax.swing.JButton registrasi;
+    private javax.swing.JComboBox<String> tahunSidang;
     private javax.swing.JTextField tfEmailMhs;
-    private javax.swing.JTextField tfJamAkhir;
-    private javax.swing.JTextField tfJamMulai;
     private javax.swing.JTextField tfJudulPa;
-    private javax.swing.JTextField tfKeahlianMhs;
     private javax.swing.JTextField tfNamaMhs;
     private javax.swing.JTextField tfNimMhs;
-    private javax.swing.JTextField tfTglAkhir;
-    private javax.swing.JTextField tfTglMulai;
     // End of variables declaration//GEN-END:variables
 }

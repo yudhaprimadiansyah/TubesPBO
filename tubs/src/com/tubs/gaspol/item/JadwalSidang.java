@@ -69,6 +69,10 @@ public class JadwalSidang extends Jadwal{
         this.KDPenguji2 = KDPenguji2;
     }
     
-    
+    public void registrasi(String nama,String nim,int idKeahlian,String email,
+            String dosenPembimbing1,String dosenPembimbing2,String tahunSidangg,String periodSidang){
+            new Mahasiswa(nim,nama,email,idKeahlian);
+            //new ProyekAkhir()
+    }
     
 }

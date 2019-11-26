@@ -168,10 +168,11 @@ public class RegistrasiMahasiswa extends javax.swing.JFrame {
         String email = jfEmail.getText();
         boolean cekNim = new CheckData().cekNim(nim);
         if(cekNim == true){
-            JOptionPane.showConfirmDialog(this, "NIM Telah Terdaftar, Silahkan Registrasi Sidang");
+            JOptionPane.showMessageDialog(this, "NIM Telah Terdaftar, Silahkan Registrasi Sidang");
         }
         else {
             new CRUD().tambahMahasiswa(nim,nama,email);
+            JOptionPane.showMessageDialog(this, "Mahasiswa Berhasil Didaftarkan");
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed

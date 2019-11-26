@@ -39,6 +39,6 @@ public class CheckData {
         return ada;
     }
     
-    public boolean cekBentrok()
+    
     
 }

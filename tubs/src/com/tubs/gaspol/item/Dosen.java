@@ -14,8 +14,8 @@ public class Dosen extends Personal{
     private int idKeahlian;
     private String nip;
 
-    public Dosen(String kodeDosen, String nip, String name, String email, int idKeahlian) {
-        super(name, email);
+    public Dosen(int id,String kodeDosen, String nip, String name, String email, int idKeahlian) {
+        super(id,name, email);
         this.kodeDosen = kodeDosen;
         this.idKeahlian = idKeahlian;
         this.nip = nip;

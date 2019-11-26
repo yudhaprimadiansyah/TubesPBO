@@ -46,7 +46,7 @@ public class ListData {
                     String nip = rs.getString("nip");
                     int idKeahlian = rs.getInt("id_keahlian");
                     String email = rs.getString("email");
-                    Dosen dosen = new Dosen(kode,nip,nama,email,idKeahlian);
+                    Dosen dosen = new Dosen(id,kode,nip,nama,email,idKeahlian);
                     listDosen.add(dosen);
                 }
                 rs.close();

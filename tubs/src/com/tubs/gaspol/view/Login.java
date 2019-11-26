@@ -176,7 +176,7 @@ public class Login extends javax.swing.JFrame {
             try {
                 PreparedStatement ps = this.conn.prepareStatement(query);
                 ResultSet res = ps.executeQuery();
-                boolean loged = false;
+                boolean loged = true;
                 while(res.next()){
                     if(res.getString("username").equals(user) && res.getString("password").equals(pass)){
                         loged = true;

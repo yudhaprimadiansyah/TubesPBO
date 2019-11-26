@@ -584,6 +584,12 @@ public class NavDosen extends javax.swing.JFrame {
         }else{
             int baris = tblDosen.getSelectedRow();
             int hasil = new CRUD().updateDosen(new ListData().getAllDosen().get(baris).getId(),nama, email, idKeahlian, kodeDosen,nip);
+            if(hasil > 0){
+                JOptionPane.showMessageDialog(this, "Input Berhasil");
+                tampilDosen();
+            }else{
+                JOptionPane.showMessageDialog(this, "Input Gagal");
+            }
         }
     }//GEN-LAST:event_btnSimpanMouseClicked
     

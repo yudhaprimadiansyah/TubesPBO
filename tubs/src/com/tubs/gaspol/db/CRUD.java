@@ -29,7 +29,7 @@ public class CRUD {
     
     }
     
-    private void tambahDosen(String nama, String email, int idKeahlian, String kodeDosen,String nip){
+    public void tambahDosen(String nama, String email, int idKeahlian, String kodeDosen,String nip){
         if(conn != null){
             try{
                 String query = "INSERT INTO dosen(nama, email, id_keahlian, kode_dosen, nip) VALUES (?,?,?,?,?)";

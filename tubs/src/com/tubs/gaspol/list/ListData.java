@@ -130,7 +130,7 @@ public class ListData {
     }*/
 
     public ArrayList<Dosen> getDosenByKeahlian(int id_keahlian) {
-        String query = "SELECT * FROM dosen WHERE id_keahlian="+id_keahlian; //To change body of generated methods, choose Tools | Templates.
+        String query = "SELECT * FROM dosen WHERE id_keahlian="+id_keahlian+"ORDER BY jatah_sidang ASC"; //To change body of generated methods, choose Tools | Templates.
         ArrayList<Dosen> ld = new ArrayList<>();
         try {
             PreparedStatement ps = this.conn.prepareStatement(query);

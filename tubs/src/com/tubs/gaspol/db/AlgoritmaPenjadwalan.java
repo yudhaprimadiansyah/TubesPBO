@@ -8,7 +8,11 @@ package com.tubs.gaspol.db;
 import com.tubs.gaspol.item.*;
 import com.tubs.gaspol.list.ListData;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,7 +28,38 @@ public class AlgoritmaPenjadwalan {
     
     public AlgoritmaPenjadwalan(int id_keahlian){
         dosenKeahlian = new ListData().getDosenByKeahlian(id_keahlian);
+        ArrayList<Dosen> dosenDapat = new getDosenFix();
+        //tambahJatah(dosen1,dosen2);
+        
     }
+    
+    private ArrayList<Dosen> getDosenFix(){
+        for(Dosen d:this.dosenKeahlian){
+            for(Dosen d2:this.dosenKeahlian){
+                if(d.getKodeDosen().equals(d2.getKodeDosen())){
+                    continue;
+                }
+                else {
+                    
+                }
+            }
+        }
+    }
+    
+    private void tambahJatah(Dosen d1, Dosen d2){
+        String query = "UPDATE dosen SET jatah_sidang=jatah_sidang+1 WHERE kode_dosen='"+d1.getKodeDosen()+"' OR kode_dosen='"+d2.getKodeDosen()+"'";
+        try {
+            PreparedStatement ps = this.conn.prepareStatement(query);
+            ps.executeQuery();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AlgoritmaPenjadwalan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    
+    
     
    
 }

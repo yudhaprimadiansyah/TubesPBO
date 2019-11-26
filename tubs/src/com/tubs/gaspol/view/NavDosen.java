@@ -252,6 +252,9 @@ public class NavDosen extends javax.swing.JFrame {
 
         addDosen.setPreferredSize(new java.awt.Dimension(106, 80));
         addDosen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addDosenMouseEntered(evt);
+            }
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addDosenMouseClicked(evt);
             }
@@ -328,7 +331,7 @@ public class NavDosen extends javax.swing.JFrame {
 
         jLabel16.setText("NIP");
 
-        btnSimpan.setText("Simpan");
+        btnSimpan.setText("Tambah Dosen");
         btnSimpan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSimpanMouseClicked(evt);
@@ -557,32 +560,58 @@ public class NavDosen extends javax.swing.JFrame {
 
     private void addDosenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addDosenMouseClicked
         // TODO add your handling code here:
-        
+        reset();
+        btnSimpan.setText("Tambah Dosen");
     }//GEN-LAST:event_addDosenMouseClicked
 
     private void btnSimpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseClicked
         // TODO add your handling code here:
         String nama = tfNama.getText();
-        String email = tfEmail.getText();
-        String idKeahlian = tfIDKeahlian.getText();
-        String kodeDosen = tfKode.getText();
-        String nip = tfNip.getText();
-        
-        int rslt = new CRUD().tambahDosen(nama, email, idKeahlian, kodeDosen,nip);
-        System.out.println(rslt);
-        if(rslt > 0){
-            JOptionPane.showMessageDialog(this, "Input Berhasil");
+            String email = tfEmail.getText();
+            String idKeahlian = tfIDKeahlian.getText();
+            String kodeDosen = tfKode.getText();
+            String nip = tfNip.getText();
             
-            tampilDosen();
+        if(btnSimpan.getText().equalsIgnoreCase("Tambah Dosen")){
+            int rslt = new CRUD().tambahDosen(nama, email, idKeahlian, kodeDosen,nip);
+            System.out.println(rslt);
+            if(rslt > 0){
+                JOptionPane.showMessageDialog(this, "Input Berhasil");
+
+                tampilDosen();
+            }else{
+                JOptionPane.showMessageDialog(this, "Input Gagal");
+            }
         }else{
-            JOptionPane.showMessageDialog(this, "Input Gagal");
+            int baris = tblDosen.getSelectedRow();
+            int hasil = new CRUD().updateDosen(1,nama, email, idKeahlian, kodeDosen,nip);
         }
     }//GEN-LAST:event_btnSimpanMouseClicked
-
+    
+    private void reset(){
+        tfNama.setText("");
+        tfKode.setText("");
+        tfNip.setText("");
+        tfIDKeahlian.setText("");
+        tfEmail.setText("");
+    }
+    
     private void editDosenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editDosenMouseClicked
         // TODO add your handling code here:
         
+        int baris = tblDosen.getSelectedRow();
+        tfNama.setText(model.getValueAt(baris, 0).toString());
+        tfKode.setText(model.getValueAt(baris, 1).toString());
+        tfNip.setText(model.getValueAt(baris, 2).toString());
+        tfIDKeahlian.setText(model.getValueAt(baris, 3).toString());
+        tfEmail.setText(model.getValueAt(baris, 4).toString());
+        btnSimpan.setText("Simpan Perubahan");
+       
     }//GEN-LAST:event_editDosenMouseClicked
+
+    private void addDosenMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addDosenMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addDosenMouseEntered
 
     /**
      * @param args the command line arguments

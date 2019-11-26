@@ -359,6 +359,7 @@
                 </Property>
               </Properties>
               <Events>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addDosenMouseEntered"/>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addDosenMouseClicked"/>
               </Events>
 
@@ -565,7 +566,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSimpan">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Simpan"/>
+                    <Property name="text" type="java.lang.String" value="Tambah Dosen"/>
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSimpanMouseClicked"/>

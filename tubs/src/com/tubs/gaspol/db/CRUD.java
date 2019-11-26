@@ -228,7 +228,7 @@ public class CRUD {
         }
         return hasil;
     }
-
+    
     public int hitungMuncul(String tfNimMhs, char c) {
          //To change body of generated methods, choose Tools | Templates.
          int count = 0;
@@ -239,6 +239,26 @@ public class CRUD {
          }
          return count+1;
     }
+    
+    public boolean sudahTerdaftarSidang(String nim){
+        boolean sudah = false;
+        String query = "SELECT nim FROM proyek_akhir WHERE nim LIKE '%"+nim+"%'";
+        PreparedStatement ps;
+        try {
+            ps = this.conn.prepareStatement(query);
+            ResultSet res = ps.executeQuery();
+            while(res.next()){
+                sudah = true;
+            }
+            res.close();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return sudah;
+    }
+
     
     
     

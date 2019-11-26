@@ -6,8 +6,7 @@
 package com.tubs.gaspol.list;
 
 import com.tubs.gaspol.db.Koneksi;
-import com.tubs.gaspol.item.Dosen;
-import com.tubs.gaspol.item.Keahlian;
+import com.tubs.gaspol.item.*;
 import com.tubs.gaspol.view.AdminDashboard;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -123,5 +122,31 @@ public class ListData {
        idList.toArray(keahlians[0]);
        keahlianList.toArray(keahlians[1]);
        return keahlians;
+    }
+    
+  /*  public ArrayList<JadwalMengajarDosen> getAllJadwalDosen(){
+        ArrayList<JadwalMengajarDosen> listJadwal = new ArrayList<>();
+        String query = "SELECT * FROM jadwal_mengajar_dosen";
+    }*/
+
+    public ArrayList<Dosen> getDosenByKeahlian(int id_keahlian) {
+        String query = "SELECT * FROM dosen WHERE id_keahlian="+id_keahlian+"ORDER BY jatah_sidang ASC"; //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Dosen> ld = new ArrayList<>();
+        try {
+            PreparedStatement ps = this.conn.prepareStatement(query);
+            ResultSet res = ps.executeQuery();
+            while(res.next()){
+                String kode = res.getString("kode_dosen");
+                String nama = res.getString("nama");
+                String email = res.getString("email");
+                String nip = res.getString("nip");
+                int idKeahlian = res.getInt("id_keahlian");
+                ld.add(new Dosen(kode,nip,nama,email,idKeahlian));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ListData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return ld;
     }
 }

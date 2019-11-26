@@ -249,6 +249,7 @@ public class CRUD {
             ResultSet res = ps.executeQuery();
             while(res.next()){
                 sudah = true;
+                break;
             }
             res.close();
             ps.close();

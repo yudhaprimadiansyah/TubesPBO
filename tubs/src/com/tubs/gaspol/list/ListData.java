@@ -25,14 +25,22 @@ import java.util.logging.Logger;
 public class ListData {
     private ArrayList<Dosen> listDosen;
     private ArrayList<Keahlian> listKeahlian;
+<<<<<<< HEAD
+    private ArrayList<Ruangan> listRuangan;
+=======
     private ArrayList<JadwalMengajarDosen> listJadwalDosen;
+>>>>>>> 80e58854528ee0cd462d0b08bcac1fd219b3cd7d
     private Connection conn;
     
     public ListData(){
         this.conn = new Koneksi().bukaKoneksi();
         loadDosen();
         loadKeahlian();
+<<<<<<< HEAD
+        loadRuangan();
+=======
         loadJadwalDosen();
+>>>>>>> 80e58854528ee0cd462d0b08bcac1fd219b3cd7d
     }
     
     public void loadDosen(){
@@ -145,6 +153,28 @@ public class ListData {
         }
     }
     
+     private void loadRuangan(){
+        System.out.println(conn);
+        if(conn != null){
+            String query = "SELECT * FROM ruangan";
+            try {
+                this.listRuangan = new ArrayList<>();
+                PreparedStatement ps = this.conn.prepareStatement(query);
+                ResultSet res = ps.executeQuery();
+                while(res.next()){
+                    int id = res.getInt("id");
+                    String namaRuangan = res.getString("nama");
+                    this.listRuangan.add(new Ruangan(id,namaRuangan));
+                }
+                res.close();
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ListData.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        }
+    }
+    
     public String[][] getAllKeahlian(){
         String[][] keahlians = new String[2][listKeahlian.size()];
         ArrayList<String> idList = new ArrayList<>();
@@ -159,13 +189,23 @@ public class ListData {
        return keahlians;
     }
     
+    public Object[] getAllRuangan(){
+        ArrayList<Integer> idList = new ArrayList<>();
+        for(Ruangan k:this.listRuangan){
+            idList.add(k.getId());
+        }
+        
+       Object ruangan[] = idList.toArray();
+       return ruangan;
+    }
+    
   /*  public ArrayList<JadwalMengajarDosen> getAllJadwalDosen(){
         ArrayList<JadwalMengajarDosen> listJadwal = new ArrayList<>();
         String query = "SELECT * FROM jadwal_mengajar_dosen";
     }*/
 
-    public ArrayList<Dosen> getDosenByKeahlian(int id_keahlian) {
-        String query = "SELECT * FROM dosen WHERE id_keahlian="+id_keahlian+"ORDER BY jatah_sidang ASC"; //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<Dosen> getDosenByKeahlian(int id_keahlian, String dosbing1, String dosbing2) {
+        String query = "SELECT * FROM dosen WHERE id_keahlian="+id_keahlian+" AND kode_dosen != '"+dosbing1+"' AND kode_dosen != '"+dosbing2+"' ORDER BY jatah_sidang ASC"; //To change body of generated methods, choose Tools | Templates.
         ArrayList<Dosen> ld = new ArrayList<>();
         try {
             PreparedStatement ps = this.conn.prepareStatement(query);

@@ -10,12 +10,15 @@ package com.tubs.gaspol.item;
  * @author seifer
  */
 public class Personal {
-    private int id;
     private String name;
     private String email;
     
+<<<<<<< HEAD
+    public Personal(String name, String email) {
+=======
     public Personal( int id,String name, String email) {
         this.id = id;
+>>>>>>> 80e58854528ee0cd462d0b08bcac1fd219b3cd7d
         this.name = name;
         this.email = email;
     }
@@ -36,13 +39,6 @@ public class Personal {
         this.email = email;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     
     

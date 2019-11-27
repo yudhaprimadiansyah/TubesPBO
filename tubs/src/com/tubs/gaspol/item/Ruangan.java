@@ -17,5 +17,23 @@ public class Ruangan {
         this.id = id;
         this.namaRuang = namaRuang;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNamaRuang() {
+        return namaRuang;
+    }
+
+    public void setNamaRuang(String namaRuang) {
+        this.namaRuang = namaRuang;
+    }
+    
+    
     
 }

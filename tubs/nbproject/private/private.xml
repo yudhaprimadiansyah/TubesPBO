@@ -3,6 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
+            <file>file:/home/seifer/Project/TubesPBO/tubs/src/com/tubs/gaspol/view/UserHome.java</file>
+            <file>file:/home/seifer/Project/TubesPBO/tubs/src/com/tubs/gaspol/item/Mahasiswa.java</file>
+            <file>file:/home/seifer/Project/TubesPBO/tubs/src/com/tubs/gaspol/item/Ruangan.java</file>
+            <file>file:/home/seifer/Project/TubesPBO/tubs/src/com/tubs/gaspol/db/CheckData.java</file>
+            <file>file:/home/seifer/Project/TubesPBO/tubs/src/com/tubs/gaspol/list/ListData.java</file>
+            <file>file:/home/seifer/Project/TubesPBO/tubs/src/com/tubs/gaspol/view/RegistrasiMahasiswa.java</file>
+            <file>file:/home/seifer/Project/TubesPBO/tubs/src/com/tubs/gaspol/item/Dosen.java</file>
+            <file>file:/home/seifer/Project/TubesPBO/tubs/src/com/tubs/gaspol/db/CRUD.java</file>
+            <file>file:/home/seifer/Project/TubesPBO/tubs/src/com/tubs/gaspol/db/AlgoritmaPenjadwalan.java</file>
+            <file>file:/home/seifer/Project/TubesPBO/tubs/src/com/tubs/gaspol/item/JadwalSidang.java</file>
+=======
             <file>file:/D:/D3IF/PBO/TUBS/TubesPBO/tubs/src/com/tubs/gaspol/db/CRUD.java</file>
             <file>file:/D:/D3IF/PBO/TUBS/TubesPBO/tubs/src/com/tubs/gaspol/view/UserHome.java</file>
             <file>file:/D:/D3IF/PBO/TUBS/TubesPBO/tubs/src/com/tubs/gaspol/list/ListData.java</file>
@@ -19,6 +31,7 @@
             <file>file:/D:/D3IF/PBO/TUBS/TubesPBO/tubs/src/com/tubs/gaspol/item/Dosen.java</file>
             <file>file:/D:/D3IF/PBO/TUBS/TubesPBO/tubs/src/com/tubs/gaspol/view/NavDosen.java</file>
             <file>file:/D:/D3IF/PBO/TUBS/TubesPBO/tubs/src/com/tubs/gaspol/item/Admin.java</file>
+>>>>>>> 80e58854528ee0cd462d0b08bcac1fd219b3cd7d
         </group>
     </open-files>
 </project-private>

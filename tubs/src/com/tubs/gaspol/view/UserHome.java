@@ -1,5 +1,6 @@
 package com.tubs.gaspol.view;
 import com.mysql.jdbc.StringUtils;
+import com.tubs.gaspol.db.AlgoritmaPenjadwalan;
 import com.tubs.gaspol.db.CRUD;
 import com.tubs.gaspol.list.*;
 import com.tubs.gaspol.db.Koneksi;
@@ -358,23 +359,26 @@ public class UserHome extends javax.swing.JFrame {
 
     private void registrasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrasiActionPerformed
         // TODO add your handling code here:
-        boolean sudah = true;
+        boolean sudah = false;
         String nimnya = "";
         String[] nim = tfNimMhs.getText().split(",", new CRUD().hitungMuncul(tfNimMhs.getText(), ','));
         for(String n:nim){
             if(new CRUD().sudahTerdaftarSidang(n)){
                 sudah = true;
                 nimnya += n+",";
+               
             }
         }
-        if(sudah == false){
+        System.out.println(sudah);
+        if(sudah != true){
             int idKeahlian = Integer.parseInt(new ListData().getAllKeahlian()[0][mataKeahlian.getSelectedIndex()]);
             String judulPa = tfJudulPa.getText();
             String dosenPembimbing1 = dosbing1.getSelectedItem().toString();
             String dosenPembimbing2 = dosbing2.getSelectedItem().toString();
             int tahunSidangg = Integer.parseInt(tahunSidang.getSelectedItem().toString());
             int periodSidang = Integer.parseInt(periodeSidang.getSelectedItem().toString());
-            new CRUD().tambahPa(judulPa, dosenPembimbing1, dosenPembimbing2, idKeahlian);
+          //  new CRUD().tambahPa(judulPa, dosenPembimbing1, dosenPembimbing2, idKeahlian);
+          new AlgoritmaPenjadwalan(idKeahlian,tahunSidangg,periodSidang,dosenPembimbing1, dosenPembimbing2);
         }
         else {
             JOptionPane.showMessageDialog(this, "NIM : "+nimnya+" Sudah Terdaftar Sidang");

@@ -378,7 +378,7 @@ public class UserHome extends javax.swing.JFrame {
             int tahunSidangg = Integer.parseInt(tahunSidang.getSelectedItem().toString());
             int periodSidang = Integer.parseInt(periodeSidang.getSelectedItem().toString());
           //  new CRUD().tambahPa(judulPa, dosenPembimbing1, dosenPembimbing2, idKeahlian);
-          new AlgoritmaPenjadwalan(idKeahlian,tahunSidangg,periodSidang);
+          new AlgoritmaPenjadwalan(idKeahlian,tahunSidangg,periodSidang,dosenPembimbing1, dosenPembimbing2);
         }
         else {
             JOptionPane.showMessageDialog(this, "NIM : "+nimnya+" Sudah Terdaftar Sidang");

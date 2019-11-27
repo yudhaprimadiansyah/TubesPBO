@@ -17,10 +17,12 @@ public class Jadwal {
     private Time jamSelesai;
 
     public Jadwal(int idJadwal, Time jamMulai, Time jamSelesai) {
+        
         this.idJadwal = idJadwal;
         this.jamMulai = jamMulai;
         this.jamSelesai = jamSelesai;
     }
+    
 
     public int getIdJadwal() {
         return idJadwal;

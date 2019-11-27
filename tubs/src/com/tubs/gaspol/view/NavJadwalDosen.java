@@ -5,6 +5,7 @@
  */
 package com.tubs.gaspol.view;
 
+import com.tubs.gaspol.db.CRUD;
 import com.tubs.gaspol.db.Koneksi;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -14,8 +15,11 @@ import com.tubs.gaspol.list.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author DORIZU
@@ -26,30 +30,26 @@ public class NavJadwalDosen extends javax.swing.JFrame {
      * Creates new form AdminDashboard
      */
     private DefaultTableModel model = new DefaultTableModel();
-    private ArrayList<Dosen> listDosen = new ListData().getAllDosen();
     
     public NavJadwalDosen() {
         initComponents();
         loadKolom();
-        tblJadwalDosen.setModel(model);
-        tampilDosen();
+        tblJdwlDosen.setModel(model);
+        tampilJdDosen();
     }
     
     private void loadKolom(){
-        model.addColumn("Nama");
-        model.addColumn("Kode Dosen");
-        model.addColumn("NIP");
-        model.addColumn("ID Keahlian");
-        model.addColumn("Email");
-        
+        model.addColumn("Hari Ke");
+        model.addColumn("Jam Mulai");
+        model.addColumn("jam Selesai");
     }
     
     
     
-    private void tampilDosen(){
+    private void tampilJdDosen(){
         model.setRowCount(0);
-        for(Dosen d: listDosen){
-            model.addRow(new Object[]{d.getName(), d.getKodeDosen(), d.getNip(), d.getIdKeahlian(), d.getEmail()});
+        for(JadwalMengajarDosen d: new ListData().getAllJdDosen()){
+            model.addRow(new Object[]{d.getHariKe(), d.getJamMulai(), d.getJamSelesai()});
         }
     }
 
@@ -75,13 +75,21 @@ public class NavJadwalDosen extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblJadwalDosen = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
+        tblJdwlDosen = new javax.swing.JTable();
+        addDosen = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        editJadwal = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        tfHari = new javax.swing.JTextField();
+        btnSimpan = new javax.swing.JButton();
+        tmMulai = new lu.tudor.santec.jtimechooser.JTimeChooser();
+        tmSelesai = new lu.tudor.santec.jtimechooser.JTimeChooser();
         background = new javax.swing.JPanel();
         logo = new javax.swing.JLabel();
         HomeUser = new javax.swing.JPanel();
@@ -216,7 +224,7 @@ public class NavJadwalDosen extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        tblJadwalDosen.setModel(new javax.swing.table.DefaultTableModel(
+        tblJdwlDosen.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -227,10 +235,18 @@ public class NavJadwalDosen extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblJadwalDosen.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane1.setViewportView(tblJadwalDosen);
+        tblJdwlDosen.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane1.setViewportView(tblJdwlDosen);
 
-        jPanel3.setPreferredSize(new java.awt.Dimension(106, 80));
+        addDosen.setPreferredSize(new java.awt.Dimension(106, 80));
+        addDosen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addDosenMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addDosenMouseEntered(evt);
+            }
+        });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Tambah Jadwal");
@@ -238,20 +254,20 @@ public class NavJadwalDosen extends javax.swing.JFrame {
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tubs/gaspol/image/close.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout addDosenLayout = new javax.swing.GroupLayout(addDosen);
+        addDosen.setLayout(addDosenLayout);
+        addDosenLayout.setHorizontalGroup(
+            addDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addDosenLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(addDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+        addDosenLayout.setVerticalGroup(
+            addDosenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addDosenLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -259,7 +275,12 @@ public class NavJadwalDosen extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel4.setPreferredSize(new java.awt.Dimension(106, 80));
+        editJadwal.setPreferredSize(new java.awt.Dimension(106, 80));
+        editJadwal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editJadwalMouseClicked(evt);
+            }
+        });
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Edit Jadwal");
@@ -267,25 +288,82 @@ public class NavJadwalDosen extends javax.swing.JFrame {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/tubs/gaspol/image/close.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout editJadwalLayout = new javax.swing.GroupLayout(editJadwal);
+        editJadwal.setLayout(editJadwalLayout);
+        editJadwalLayout.setHorizontalGroup(
+            editJadwalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editJadwalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(editJadwalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+        editJadwalLayout.setVerticalGroup(
+            editJadwalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editJadwalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addContainerGap())
+        );
+
+        jLabel2.setText("Jam Selesai");
+
+        jLabel3.setText("Hari");
+
+        jLabel11.setText("Jam Mulai");
+
+        btnSimpan.setText("Tambah Dosen");
+        btnSimpan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSimpanMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(30, 30, 30)
+                        .addComponent(tfHari, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tmMulai, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tmSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSimpan)
+                .addGap(50, 50, 50))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel2)
+                        .addComponent(tfHari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tmSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1)
+                .addComponent(btnSimpan)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(tmMulai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -294,12 +372,13 @@ public class NavJadwalDosen extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 905, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addDosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(editJadwal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -307,11 +386,13 @@ public class NavJadwalDosen extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+                    .addComponent(addDosen, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                    .addComponent(editJadwal, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -321,17 +402,17 @@ public class NavJadwalDosen extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -425,7 +506,7 @@ public class NavJadwalDosen extends javax.swing.JFrame {
                 .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -440,6 +521,75 @@ public class NavJadwalDosen extends javax.swing.JFrame {
     private void HomeUserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_HomeUserPropertyChange
         // TODO add your handling code here:
     }//GEN-LAST:event_HomeUserPropertyChange
+
+    private void addDosenMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addDosenMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addDosenMouseEntered
+
+    private void addDosenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addDosenMouseClicked
+        // TODO add your handling code here:
+        reset();
+        btnSimpan.setText("Tambah Jadwal");
+    }//GEN-LAST:event_addDosenMouseClicked
+
+    public void reset(){
+        tfHari.setText("");
+        tmMulai.setTime(null);
+        tmSelesai.setTime(null);
+    }
+    
+    private void editJadwalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editJadwalMouseClicked
+        // TODO add your handling code here:
+        int baris = tblJdwlDosen.getSelectedRow();
+        tfHari.setText(model.getValueAt(baris, 0).toString());
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        
+        try {
+            tmMulai.setTime(format.parse(model.getValueAt(baris, 1).toString()));
+            tmSelesai.setTime(format.parse(model.getValueAt(baris, 2).toString()));
+        } catch (ParseException ex) {
+            Logger.getLogger(NavJadwalDosen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        btnSimpan.setText("Simpan Perubahan");
+
+    }//GEN-LAST:event_editJadwalMouseClicked
+
+    private void btnSimpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseClicked
+        // TODO add your handling code here:
+        int hari = Integer.parseInt(tfHari.getText());
+        String jamMulai = tmMulai.getFormatedDate("HH:mm:ss");
+        String jamSelesai = tmSelesai.getFormatedDate("HH:mm:ss");
+        
+        System.out.println(jamMulai);
+        
+        
+//        String nama = tfNama.getText();
+//        String email = tfEmail.getText();
+//        String idKeahlian = tfIDKeahlian.getText();
+//        String kodeDosen = tfKode.getText();
+//        String nip = tfNip.getText();
+//
+        if(btnSimpan.getText().equalsIgnoreCase("Tambah Jadwal")){
+            int rslt = new CRUD().tambahJadwalDosen(jamMulai, jamSelesai,hari);
+            System.out.println(rslt);
+            if(rslt > 0){
+                JOptionPane.showMessageDialog(this, "Input Berhasil");
+                tampilJdDosen();
+            }else{
+                JOptionPane.showMessageDialog(this, "Input Gagal");
+            }
+        }else{
+            int baris = tblJdwlDosen.getSelectedRow();
+            int hasil = new CRUD().updateJadwalDosen(new ListData().getAllJdDosen().get(baris).getIdJadwal(), jamMulai, jamSelesai,hari);
+            if(hasil > 0){
+                JOptionPane.showMessageDialog(this, "Input Berhasil");
+                tampilJdDosen();
+            }else{
+                JOptionPane.showMessageDialog(this, "Input Gagal");
+            }
+        }
+    }//GEN-LAST:event_btnSimpanMouseClicked
 
     /**
      * @param args the command line arguments
@@ -493,12 +643,18 @@ public class NavJadwalDosen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel HomeUser;
+    private javax.swing.JPanel addDosen;
     private javax.swing.JPanel background;
+    private javax.swing.JButton btnSimpan;
+    private javax.swing.JPanel editJadwal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -508,7 +664,6 @@ public class NavJadwalDosen extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logo;
@@ -516,6 +671,9 @@ public class NavJadwalDosen extends javax.swing.JFrame {
     private javax.swing.JPanel nav_jadwal_dosen;
     private javax.swing.JPanel nav_jadwal_sidang;
     private javax.swing.JPanel nav_ruang;
-    private javax.swing.JTable tblJadwalDosen;
+    private javax.swing.JTable tblJdwlDosen;
+    private javax.swing.JTextField tfHari;
+    private lu.tudor.santec.jtimechooser.JTimeChooser tmMulai;
+    private lu.tudor.santec.jtimechooser.JTimeChooser tmSelesai;
     // End of variables declaration//GEN-END:variables
 }

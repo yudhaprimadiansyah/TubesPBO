@@ -8,10 +8,12 @@ package com.tubs.gaspol.list;
 import com.tubs.gaspol.db.Koneksi;
 import com.tubs.gaspol.item.*;
 import com.tubs.gaspol.view.AdminDashboard;
+import com.tubs.gaspol.view.NavJadwalDosen;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,12 +25,14 @@ import java.util.logging.Logger;
 public class ListData {
     private ArrayList<Dosen> listDosen;
     private ArrayList<Keahlian> listKeahlian;
+    private ArrayList<JadwalMengajarDosen> listJadwalDosen;
     private Connection conn;
     
     public ListData(){
         this.conn = new Koneksi().bukaKoneksi();
         loadDosen();
         loadKeahlian();
+        loadJadwalDosen();
     }
     
     public void loadDosen(){
@@ -45,6 +49,7 @@ public class ListData {
                     String nip = rs.getString("nip");
                     int idKeahlian = rs.getInt("id_keahlian");
                     String email = rs.getString("email");
+                    
                     Dosen dosen = new Dosen(id,kode,nip,nama,email,idKeahlian);
                     listDosen.add(dosen);
                 }
@@ -56,8 +61,38 @@ public class ListData {
         }
     }
     
+    public void loadJadwalDosen(){
+        if(conn != null){
+            listJadwalDosen = new ArrayList<>();
+            String query = "SELECT * FROM jadwal_mengajar_dosen";
+            try{
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()){
+                    int id = rs.getInt("id");
+                    Time jamAwal = rs.getTime("jam_mulai");
+                    Time jamAkhir = rs.getTime("jam_selesai");
+                    int hariKe = rs.getInt("hari_ke");
+                    
+                    JadwalMengajarDosen jdDosen = new JadwalMengajarDosen(id,hariKe,jamAwal,jamAkhir);
+                    listJadwalDosen.add(jdDosen);
+                }
+                rs.close();
+                ps.close();
+            }catch(SQLException e){
+                
+                Logger.getLogger(NavJadwalDosen.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+        
+    }
+    
     public ArrayList<Dosen> getAllDosen(){
         return this.listDosen;
+    }
+    
+    public ArrayList<JadwalMengajarDosen> getAllJdDosen(){
+        return this.listJadwalDosen;
     }
     
     
@@ -136,12 +171,13 @@ public class ListData {
             PreparedStatement ps = this.conn.prepareStatement(query);
             ResultSet res = ps.executeQuery();
             while(res.next()){
+                int id = res.getInt("id");
                 String kode = res.getString("kode_dosen");
                 String nama = res.getString("nama");
                 String email = res.getString("email");
                 String nip = res.getString("nip");
                 int idKeahlian = res.getInt("id_keahlian");
-                ld.add(new Dosen(kode,nip,nama,email,idKeahlian));
+                ld.add(new Dosen(id,kode,nip,nama,email,idKeahlian));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ListData.class.getName()).log(Level.SEVERE, null, ex);

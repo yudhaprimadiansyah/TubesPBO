@@ -14,7 +14,7 @@ import java.sql.Time;
 public class JadwalMengajarDosen extends Jadwal {
     private int hariKe;
 
-    public JadwalMengajarDosen(int hariKe, int idJadwal, Time jamMulai, Time jamSelesai) {
+    public JadwalMengajarDosen(int idJadwal,int hariKe, Time jamMulai, Time jamSelesai) {
         super(idJadwal, jamMulai, jamSelesai);
         this.hariKe = hariKe;
     }

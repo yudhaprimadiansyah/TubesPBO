@@ -85,7 +85,8 @@ public class CRUD {
         return hasil;
     }
     
-    public void tambahJadwalSidang(String jamMulai, String jamSelesai, String tanggal, int idPenguji1, int idPenguji2, int idRuang, int idPa, int idPeriode){
+    public int tambahJadwalSidang(String jamMulai, String jamSelesai, String tanggal, int idPenguji1, int idPenguji2, int idRuang, int idPa, int idPeriode){
+        int hasil =0;
         if(conn != null){
             try{
                 String query = "INSERT INTO jadwal_sidang(jam_mulai, jam_selesai, tanggal, id_penguji1, id_penguji2, id_ruang, id_pa, id_periode) VALUES (?,?,?,?,?,?,?,?)";
@@ -99,12 +100,14 @@ public class CRUD {
                 ps.setInt(7, idPa);
                 ps.setInt(8, idPeriode);
 
-                int hasil = ps.executeUpdate();
+                 hasil= ps.executeUpdate();
                 
             }catch(SQLException e){
                 Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, e);
             }
         }
+        
+        return hasil;
     }
     
     public void tambahKeahlian(String namaKeahlian){
@@ -205,6 +208,25 @@ public class CRUD {
                 ps.setString(5, nip);
                 ps.setInt(6, id);
                 hasil = ps.executeUpdate();
+                
+            }catch(SQLException e){
+                Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+        return hasil;
+    }
+    
+    public int updateJadwalDosen(int id,String jamMulai, String jamSelesai, int hariKe){
+        int hasil = 0;
+        if(conn != null){
+            try{
+                String query = "UPDATE jadwal_mengajar_dosen SET jam_mulai=?, jam_selesai=?, hari_ke=? WHERE id=?";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ps.setString(1, jamMulai);
+                ps.setString(2, jamSelesai);
+                ps.setInt(3, hariKe);
+                ps.setInt(4, id);
+                 hasil= ps.executeUpdate();
                 
             }catch(SQLException e){
                 Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, e);

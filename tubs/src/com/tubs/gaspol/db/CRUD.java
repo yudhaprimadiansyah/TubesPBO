@@ -67,7 +67,8 @@ public class CRUD {
         }
     }
     
-    public void tambahJadwalDosen(String jamMulai, String jamSelesai, int hariKe){
+    public int tambahJadwalDosen(String jamMulai, String jamSelesai, int hariKe){
+        int hasil = 0;
         if(conn != null){
             try{
                 String query = "INSERT INTO jadwal_mengajar_dosen(jam_mulai, jam_selesai, hari_ke) VALUES (?,?,?)";
@@ -75,12 +76,13 @@ public class CRUD {
                 ps.setString(1, jamMulai);
                 ps.setString(2, jamSelesai);
                 ps.setInt(3, hariKe);
-                int hasil = ps.executeUpdate();
+                 hasil= ps.executeUpdate();
                 
             }catch(SQLException e){
                 Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, e);
             }
         }
+        return hasil;
     }
     
     public void tambahJadwalSidang(String jamMulai, String jamSelesai, String tanggal, int idPenguji1, int idPenguji2, int idRuang, int idPa, int idPeriode){
